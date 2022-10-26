@@ -1,0 +1,16 @@
+---network
+
+docker network create -d bridge --gateway  <tennetwork>
+
+exp:
+docker network create \
+  --driver=bridge \
+  --subnet=172.28.0.0/16 \
+  --ip-range=172.28.5.0/24 \
+  --gateway=172.28.5.254 \
+  br0
+
+---MySql
+docker run --name=cmcdemo/docker-mysql -e MYSQL_ROOT_PASSWORD=123456 -d -p 3306:3307 mysql:lastest
+
+docker network connect --ip x.x.x.x <networkname> <container>
