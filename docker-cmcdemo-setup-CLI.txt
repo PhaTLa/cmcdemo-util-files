@@ -10,11 +10,23 @@ docker network create \
   --gateway=172.28.5.254 \
   br0
 
+ms-network setting:
+
+"Scope": "local",
+    "Driver": "bridge",
+    "EnableIPv6": false,
+    "IPAM": {
+        "Driver": "default",
+        "Options": {},
+        "Config": [
+            {
+                "Subnet": "172.19.0.0/16",
+                "Gateway": "172.19.0.1"
+            }
+        ]
+    },
+
 ---MySql
 docker run --name=cmcdemo/docker-mysql -e MYSQL_ROOT_PASSWORD=123456 -d -p 3306:3307 mysql:lastest
 
 docker network connect --ip x.x.x.x <networkname> <container>
-
-create user 'docker'@'172.19.0.%' identified by '123456';
-grant all privileges on *.* to 'docker'@'172.19.0.%' with grant option;
-flush privileges;
