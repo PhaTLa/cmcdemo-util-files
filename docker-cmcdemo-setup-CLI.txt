@@ -27,6 +27,10 @@ ms-network setting:
     },
 
 ---MySql
-docker run --name=cmcdemo/docker-mysql -e MYSQL_ROOT_PASSWORD=123456 -d -p 3306:3307 mysql:lastest
+docker run --name=cmcdemo/docker-mysql -e MYSQL_ROOT_PASSWORD=123456 -d -p 3307:3306 mysql:lastest
 
 docker network connect --ip x.x.x.x <networkname> <container>
+
+create user 'docker'@'172.19.0.%' identified by '123456';
+grant all privileges on *.* to 'docker'@'172.19.0.%' with grant option;
+flush privileges;
