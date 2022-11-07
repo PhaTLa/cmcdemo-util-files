@@ -1,0 +1,114 @@
+version: '3'
+services:
+  mysql:
+    container_name: cmcdemo-docker-mysql
+    image: "lampt1210/first-repo:cmcdemo-mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - "3307:3306"
+    expose:
+      - 3306
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.2
+
+  config-server:
+    container_name: config-server
+    image: "lampt1210/first-repo:cmcdemo-config-server"
+    ports:
+      - "9999:9999"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.6
+
+  discovery-service:
+    depends_on:
+      - config-server
+    container_name: discovery-service
+    image: "lampt1210/first-repo:cmcdemo-discovery-service"
+    ports:
+      - "8888:8888"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.3
+  
+  gateway-service:
+    depends_on:
+      - config-server
+      - discovery-service
+    container_name: gateway-service
+    image: "lampt1210/first-repo:cmcdemo-gateway-service"
+    ports:
+      - "8083:8083"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.4
+
+  user-service:
+    depends_on:
+      - gateway-service
+    container_name: user-service
+    image: "lampt1210/first-repo:cmcdemo-user-service"
+    ports:
+      - "8082:8082"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.5
+
+  common-service:
+    depends_on:
+      - config-server
+      - discovery-service
+    container_name: common-service
+    image: "lampt1210/first-repo:cmcdemo-common-service"
+    ports:
+      - "8085:8085"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.7
+
+  product-service:
+    depends_on:
+      - config-server
+      - discovery-service
+      - common-service
+    container_name: product-service
+    image: "lampt1210/first-repo:cmcdemo-product-service"
+    ports:
+      - "8084:8084"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.8
+
+  cart-service:
+    depends_on:
+      - config-server
+      - discovery-service
+      - product-service
+    container_name: cart-service
+    image: "lampt1210/first-repo:cmcdemo-cart-service"
+    ports:
+      - "8086:8086"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.9
+
+  blog-service:
+    depends_on:
+      - config-server
+      - discovery-service
+      - product-service
+      - user-service
+    container_name: blog-service
+    image: "lampt1210/first-repo:cmcdemo-blog-service"
+    ports:
+      - "8087:8087"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.10
+
+networks:
+  ms-network:
+    external:
+      name: ms-network
