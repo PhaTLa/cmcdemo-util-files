@@ -55,6 +55,71 @@ services:
       ms-network:
         ipv4_address: 172.19.0.5
 
+  common-service:
+    depends_on:
+      - config-server
+      - discovery-service
+    container_name: common-service
+    build:
+      context: common_service
+      dockerfile: Dockerfile
+    image: "lampt1210/first-repo:cmcdemo-common-service"
+    ports:
+      - "8085:8085"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.7
+
+  product-service:
+    depends_on:
+      - config-server
+      - discovery-service
+      - common-service
+    container_name: product-service
+    build:
+      context: product-management
+      dockerfile: Dockerfile
+    image: "lampt1210/first-repo:cmcdemo-product-service"
+    ports:
+      - "8084:8084"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.8
+
+  cart-service:
+    depends_on:
+      - config-server
+      - discovery-service
+      - product-service
+    container_name: cart-service
+    build:
+      context: cart_management
+      dockerfile: Dockerfile
+    image: "lampt1210/first-repo:cmcdemo-cart-service"
+    ports:
+      - "8086:8086"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.9
+
+  blog-service:
+    depends_on:
+      - config-server
+      - discovery-service
+      - product-service
+      - user-service
+    container_name: blog-service
+    build:
+      context: blog_management
+      dockerfile: Dockerfile
+    image: "lampt1210/first-repo:cmcdemo-blog-service"
+    ports:
+      - "8087:8087"
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.10
+
+
 networks:
   ms-network:
     external:
