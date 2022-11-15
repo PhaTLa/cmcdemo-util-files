@@ -107,6 +107,15 @@ services:
     networks:
       ms-network:
         ipv4_address: 172.19.0.10
+  
+  watchtower:
+    image: containrrr/watchtower
+    environment:
+      - REPPO_USER=lampt1210
+      - REPO_PASS=12102022a@
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
 
 networks:
   ms-network:
