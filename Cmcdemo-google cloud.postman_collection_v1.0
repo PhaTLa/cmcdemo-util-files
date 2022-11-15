@@ -1,0 +1,637 @@
+{
+	"info": {
+		"_postman_id": "f551eccd-a771-4e4e-9530-d3df633d4345",
+		"name": "Cmcdemo-google cloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user-management",
+			"item": [
+				{
+					"name": "get id by username",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "35.215.129.247:8083/user/api/get-id/dhtu1@cmcglobal.vn",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"user",
+								"api",
+								"get-id",
+								"dhtu1@cmcglobal.vn"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token Copy 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{refresh_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "35.215.129.247:8083/user/api/token/refresh",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"user",
+								"api",
+								"token",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - goodle cloud",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"jwt\", jsonData.access_token);\r",
+									"pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"dhtu1@cmcglobal.vn\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "35.215.129.247:8083/user/api/login",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"user",
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Pham Lam\",\r\n    \"email\":\"phamlam@gmail.com\",\r\n    \"password\":\"123\",\r\n    \"confirmPassword\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "35.215.129.247:8083/user/api/register",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"user",
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product-management",
+			"item": [
+				{
+					"name": "product_list- admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "35.215.129.247:8083/product/api/admin/products?page=1&size=100",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"product",
+								"api",
+								"admin",
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product_list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "35.215.129.247:8083/product/api/products?page=1&size=8",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"product",
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkaHR1MUBjbWNnbG9iYWwudm4iLCJyb2xlcyI6WyJBRE1JTiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODEvYXBpL2xvZ2luIiwiZXhwIjoxNjY1NDYxNjE2fQ.OXOfKTMdI9WHnxA47wTA15GU1ykeCG6weK7SgRhkEZY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "35.215.129.247:8083/product/api/product/15",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"product",
+								"api",
+								"product",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product by id - admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "35.215.129.247:8083/product/api/admin/product/15",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"product",
+								"api",
+								"admin",
+								"product",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addProduct",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "api_key",
+								"value": "Key ",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/D:/ptlam2/Doc/Photo/Iron_Man_bleeding_edge.jpg"
+								},
+								{
+									"key": "jsonFile",
+									"value": "{\"displayName\":\"handoicong tu\",\"price\":9.99,\"description\":\"test\",\"categories\":[1,2,3]}",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://35.215.129.247:8083/product/api/admin/addProduct",
+							"protocol": "http",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"product",
+								"api",
+								"admin",
+								"addProduct"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart-management",
+			"item": [
+				{
+					"name": "get cart Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkdXlhbmgyODEyQGdtYWlsLmNvbSIsInJvbGVzIjoiVVNFUiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MS9hcGkvdG9rZW4vcmVmcmVzaCIsImV4cCI6MTY2NDc3Njg5Mn0.gNlTi-AyQndwztmmqUzXfOZhTUnBB-G3HCj9ylB0YbY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "35.215.129.247:8083/cart/api/cart/2",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"cart",
+								"api",
+								"cart",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Cart google cloud",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userid\": 2,\r\n  \"productRequestList\": [\r\n    {\r\n      \"id\": 1,\r\n      \"price\": 0,\r\n      \"count\": 1\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"price\": 0,\r\n      \"count\": 2\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "35.215.129.247:8083/cart/api/cart/add",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"cart",
+								"api",
+								"cart",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "blog-management",
+			"item": [
+				{
+					"name": "All blogs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "35.215.129.247:8083/blog/api/admin/blogs?page=1&size=10",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"blog",
+								"api",
+								"admin",
+								"blogs"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All blogs - admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "35.215.129.247:8083/blog/api/blogs?page=1&size=10",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"blog",
+								"api",
+								"blogs"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a blog",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "35.215.129.247:8083/blog/api/blog/BLOG_0904540d-414c-4758-bdef-08cf7b76324d",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"blog",
+								"api",
+								"blog",
+								"BLOG_0904540d-414c-4758-bdef-08cf7b76324d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Blog Add Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "jsonFile",
+									"value": "{\"userName\": \"dhtu1@cmcglobal.vn\",\"title\": \"this's work, who know\",\"description\": \"another normal day in the planet earth\"}",
+									"type": "text"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/D:/ptlam2/Doc/Photo/MicrosoftTeams-image.png"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "35.215.129.247:8083/blog/api/admin/blog/add",
+							"host": [
+								"35",
+								"215",
+								"129",
+								"247"
+							],
+							"port": "8083",
+							"path": [
+								"blog",
+								"api",
+								"admin",
+								"blog",
+								"add"
+							],
+							"query": [
+								{
+									"key": "jsonFile",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt",
+			"value": ""
+		},
+		{
+			"key": "refresh_token",
+			"value": ""
+		}
+	]
+}
