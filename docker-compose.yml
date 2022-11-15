@@ -1,5 +1,19 @@
 version: '3'
 services:
+
+  mysql:
+    container_name: cmcdemo-docker-mysql
+    image: "lampt1210/first-repo:cmcdemo-mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - "3307:3306"
+    expose:
+      - 3306
+    networks:
+      ms-network:
+        ipv4_address: 172.19.0.2
+
   config-server:
     container_name: config-server
     build:
@@ -118,9 +132,18 @@ services:
     networks:
       ms-network:
         ipv4_address: 172.19.0.10
-
+  
+  watchtower:
+    image: containrrr/watchtower
+    environment:
+      - REPPO_USER=lampt1210
+      - REPO_PASS=12102022a@
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
 
 networks:
   ms-network:
     external:
       name: ms-network
+
